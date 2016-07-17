@@ -5,8 +5,8 @@ import numpy as np
 
 EDGE_LENGTH = 8 * cm
 WITH_MERGIN = True
-MARGIN_SIZE = .5 * cm
-MARGIN_ANG = np.pi * 55 / 180  # 65 degrees
+MARGIN_SIZE = 1 * cm
+MARGIN_ANG = np.pi * 28 / 180
 
 
 def get_rotmat(a):
@@ -47,7 +47,6 @@ def main():
     pdf.setAuthor("Kimikazu Kato")
     pdf.setTitle("Regular Octahedron")
 
-    # length of edge
     pdf.setPageSize((width, height))
     v1 = np.array([width / 2 + EDGE_LENGTH / 2, height / 2])
     v2 = np.array([width / 2 - EDGE_LENGTH / 2, height / 2])
