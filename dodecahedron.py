@@ -9,7 +9,7 @@ from craftdraw import polyline
 
 
 EDGE_LENGTH = 3.5 * cm
-WITH_MERGIN = True
+WITH_MARGIN = True
 MARGIN_SIZE = .6 * cm
 MARGIN_ANG = np.pi * 36 / 180
 
@@ -52,7 +52,7 @@ def main():
     v2 = np.array([width / 2 - EDGE_LENGTH / 2, height / 2])
     vs = polygon(v1, v2)
     polyline(pdf, vs)
-    if WITH_MERGIN:
+    if WITH_MARGIN:
         for j in range(2, 4):
             mvs = margin(vs[j + 1, :], vs[j, :])
             polyline(pdf, mvs)
@@ -62,7 +62,7 @@ def main():
     for i in range(4):
         vs3 = polygon(vs2[i + 1, :], vs2[i, :], 4)
         polyline(pdf, vs3)
-        if WITH_MERGIN:
+        if WITH_MARGIN:
             for j in range(3):
                 mvs = margin(vs3[j + 1, :], vs3[j, :])
                 polyline(pdf, mvs)
@@ -70,7 +70,7 @@ def main():
     # Upper half
     vs = polygon(v2, v1)
     polyline(pdf, vs)
-    if WITH_MERGIN:
+    if WITH_MARGIN:
         mvs = margin(vs[1, :], vs[0, :])
         polyline(pdf, mvs)
         mvs = margin(vs[3, :], vs[2, :])
@@ -81,7 +81,7 @@ def main():
     for i in range(4):
         vs3 = polygon(vs2[i + 1, :], vs2[i, :], 4)
         polyline(pdf, vs3)
-        if WITH_MERGIN:
+        if WITH_MARGIN:
             if i != 3:
                 mvs = margin(vs3[4, :], vs3[3, :])
                 polyline(pdf, mvs)

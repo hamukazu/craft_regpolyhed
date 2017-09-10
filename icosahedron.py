@@ -8,7 +8,7 @@ from craftmath import rotation_matrix, margin
 from craftdraw import polyline
 
 EDGE_LENGTH = 5 * cm
-WITH_MERGIN = True
+WITH_MARGIN = True
 MARGIN_SIZE = 1 * cm
 MARGIN_ANG = np.pi * 28 / 180
 
@@ -44,7 +44,7 @@ def main():
     v2 = np.array([v[0] + EDGE_LENGTH * np.sqrt(3) / 4,
                    v[1] - EDGE_LENGTH / 4])
 
-    if WITH_MERGIN:
+    if WITH_MARGIN:
         mvs = margin(v2, v1)
         polyline(pdf, mvs)
 
@@ -68,7 +68,7 @@ def main():
     for i in range(5):
         vs = hat(vs1[i, :], vs1[i + 1, :])
         polyline(pdf, vs)
-        if WITH_MERGIN:
+        if WITH_MARGIN:
             if i != 0:
                 mvs = margin(vs[2, :], vs[1, :])
                 polyline(pdf, mvs)
@@ -79,7 +79,7 @@ def main():
     for i in range(5):
         vs = hat(vs2[i + 1, :], vs2[i, :])
         polyline(pdf, vs)
-        if WITH_MERGIN:
+        if WITH_MARGIN:
             if i != 0:
                 mvs = margin(vs[1, :], vs[0, :])
                 polyline(pdf, mvs)
