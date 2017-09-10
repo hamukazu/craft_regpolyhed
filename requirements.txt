@@ -1,0 +1,2 @@
+numpy==1.13.1
+reportlab==3.4.0
