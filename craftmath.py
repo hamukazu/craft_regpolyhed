@@ -6,10 +6,10 @@ def rotation_matrix(a):
                      [np.sin(a), np.cos(a)]])
 
 
-def margin(angle, v1, v2):
+def margin(angle, size, v1, v2):
     vv = v2 - v1
     vv = vv / np.sqrt((vv**2).sum())
-    edgelen = angle / np.sin(angle)
+    edgelen = size / np.sin(angle)
     v3 = v1 + edgelen * np.dot(rotation_matrix(angle), vv)
     v4 = v2 - edgelen * np.dot(rotation_matrix(-angle), vv)
     return np.c_[v2, v4, v3, v1].T
