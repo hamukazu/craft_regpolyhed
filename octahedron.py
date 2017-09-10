@@ -1,9 +1,10 @@
 #!/usr/bin/env python
+from functools import partial
 from reportlab.pdfgen import canvas
 from reportlab.lib.units import cm
 import numpy as np
 
-from craftmath import rotation_matrix
+from craftmath import rotation_matrix, margin
 from craftdraw import polyline
 
 
@@ -21,13 +22,7 @@ def polygon(v1, v2, n=3):
     return np.c_[v2, vv, v1, v2].T[:n + 1]
 
 
-def margin(v1, v2):
-    vv = v2 - v1
-    vv = vv / np.sqrt((vv**2).sum())
-    edgelen = MARGIN_SIZE / np.sin(MARGIN_ANG)
-    v3 = v1 + edgelen * np.dot(rotation_matrix(MARGIN_ANG), vv)
-    v4 = v2 - edgelen * np.dot(rotation_matrix(-MARGIN_ANG), vv)
-    return np.c_[v2, v4, v3, v1].T
+margin = partial(margin, MARGIN_ANG, MARGIN_SIZE)
 
 
 def main():
