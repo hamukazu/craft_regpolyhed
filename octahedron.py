@@ -3,6 +3,7 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.units import cm
 import numpy as np
 
+from craftmath import rotation_matrix
 from craftdraw import polyline
 
 
@@ -11,12 +12,7 @@ WITH_MERGIN = True
 MARGIN_SIZE = 1 * cm
 MARGIN_ANG = np.pi * 28 / 180
 
-
-def get_rotmat(a):
-    return np.array([[np.cos(a), -np.sin(a)],
-                     [np.sin(a), np.cos(a)]])
-
-ROTMAT = get_rotmat(np.pi * 120 / 180)
+ROTMAT = rotation_matrix(np.pi * 120 / 180)
 
 
 def polygon(v1, v2, n=3):
@@ -29,8 +25,8 @@ def margin(v1, v2):
     vv = v2 - v1
     vv = vv / np.sqrt((vv**2).sum())
     edgelen = MARGIN_SIZE / np.sin(MARGIN_ANG)
-    v3 = v1 + edgelen * np.dot(get_rotmat(MARGIN_ANG), vv)
-    v4 = v2 - edgelen * np.dot(get_rotmat(-MARGIN_ANG), vv)
+    v3 = v1 + edgelen * np.dot(rotation_matrix(MARGIN_ANG), vv)
+    v4 = v2 - edgelen * np.dot(rotation_matrix(-MARGIN_ANG), vv)
     return np.c_[v2, v4, v3, v1].T
 
 
