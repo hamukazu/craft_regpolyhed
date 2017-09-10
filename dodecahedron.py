@@ -3,6 +3,9 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.units import cm
 import numpy as np
 
+from craftdraw import polyline
+
+
 EDGE_LENGTH = 3.5 * cm
 WITH_MERGIN = True
 MARGIN_SIZE = .6 * cm
@@ -40,11 +43,6 @@ def margin(v1, v2):
     return np.c_[v2, v4, v3, v1].T
 
 
-def draw(pdf, vs):
-    for i in range(len(vs) - 1):
-        pdf.line(vs[i, 0], vs[i, 1], vs[i + 1, 0], vs[i + 1, 1])
-
-
 def main():
     # Paper size (A4)
     width = 21.0 * cm
@@ -62,40 +60,40 @@ def main():
     v1 = np.array([width / 2 + EDGE_LENGTH / 2, height / 2])
     v2 = np.array([width / 2 - EDGE_LENGTH / 2, height / 2])
     vs = polygon(v1, v2)
-    draw(pdf, vs)
+    polyline(pdf, vs)
     if WITH_MERGIN:
         for j in range(2, 4):
             mvs = margin(vs[j + 1, :], vs[j, :])
-            draw(pdf, mvs)
+            polyline(pdf, mvs)
 
     vs2 = polygon(vs[2, :], vs[1, :], 4)
-    draw(pdf, vs2)
+    polyline(pdf, vs2)
     for i in range(4):
         vs3 = polygon(vs2[i + 1, :], vs2[i, :], 4)
-        draw(pdf, vs3)
+        polyline(pdf, vs3)
         if WITH_MERGIN:
             for j in range(3):
                 mvs = margin(vs3[j + 1, :], vs3[j, :])
-                draw(pdf, mvs)
+                polyline(pdf, mvs)
 
     # Upper half
     vs = polygon(v2, v1)
-    draw(pdf, vs)
+    polyline(pdf, vs)
     if WITH_MERGIN:
         mvs = margin(vs[1, :], vs[0, :])
-        draw(pdf, mvs)
+        polyline(pdf, mvs)
         mvs = margin(vs[3, :], vs[2, :])
-        draw(pdf, mvs)
+        polyline(pdf, mvs)
 
     vs2 = polygon(vs[2, :], vs[1, :], 4)
-    draw(pdf, vs2)
+    polyline(pdf, vs2)
     for i in range(4):
         vs3 = polygon(vs2[i + 1, :], vs2[i, :], 4)
-        draw(pdf, vs3)
+        polyline(pdf, vs3)
         if WITH_MERGIN:
             if i != 3:
                 mvs = margin(vs3[4, :], vs3[3, :])
-                draw(pdf, mvs)
+                polyline(pdf, mvs)
 
     pdf.saveState()
     pdf.save()
